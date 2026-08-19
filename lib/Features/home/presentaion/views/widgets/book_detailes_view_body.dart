@@ -3,8 +3,8 @@ import 'package:book/core/utils/styles.dart';
 
 import 'package:flutter/material.dart';
 
-import 'booking_rating.dart';
-import 'custom_lbook_item.dart';
+
+import 'custom_book_item.dart';
 
 class BookDetailesViewBody extends StatelessWidget {
   const new({super.key});
@@ -19,25 +19,24 @@ class BookDetailesViewBody extends StatelessWidget {
           const CustomaBookDetaliesAppbar(),
           Padding(
             padding: EdgeInsets.symmetric(vertical: width * .2),
-            child: const CustomBookImage()
+            child: const CustomBookImage(),
           ),
-            const SizedBox(height: 43,),
-            Text('The jungle Book',style: Styles.textStyle30.copyWith(
-              fontWeight: FontWeight.bold
-            )),
-      const SizedBox(height: 6),
-              Opacity(
-                opacity: .7,
-                child: Text('RUdyard kioing',style: Styles.textStyle18.copyWith(
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w500
-                )),
+          const SizedBox(height: 43),
+          Text(
+            'The jungle Book',
+            style: Styles.textStyle30.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 6),
+          Opacity(
+            opacity: .7,
+            child: Text(
+              'RUdyard kioing',
+              style: Styles.textStyle18.copyWith(
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w500,
               ),
-      const SizedBox(height: 6),
-                BookRating(),
-
-
-
+            ),
+          ),
         ],
       ),
     );
