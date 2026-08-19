@@ -20,6 +20,7 @@ class CustomListviewItem extends StatelessWidget {
 
         ),
       ),
+
     );
   }
 }

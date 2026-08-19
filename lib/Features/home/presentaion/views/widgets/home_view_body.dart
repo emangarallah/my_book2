@@ -1,50 +1,48 @@
+import 'package:book/Features/home/presentaion/views/widgets/best_seller_list_view.dart';
+import 'package:book/Features/home/presentaion/views/widgets/best_seller_list_view_item.dart';
+
 import 'package:flutter/material.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
-
+import '../../../../../core/utils/styles.dart';
 import 'custom_app_bar.dart';
-import 'custom_list_view_item.dart';
+
+import 'featured_List_view.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        CustomAppBar(),
-        //CustomListviewItem(),
-      FeaturedBooksListView()
-        
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: CustomAppBar(),
+              ),
+              //CustomListviewItem(),
+              FeaturedBooksListView(),
+              SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text('Best Selers', style: Styles.textStyle18),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
+        ),
 
+        const SliverFillRemaining(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: BestSellerListView(),
+          ),
+        ),
       ],
     );
   }
 }
-
-
-class FeaturedBooksListView extends StatelessWidget {
-  const FeaturedBooksListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-         height: MediaQuery.of(context).size.height *.3,
-      child: ListView.builder(
-        itemCount: 10,
-          scrollDirection: Axis.horizontal,
-
-
-
-          itemBuilder: (context,index){
-          return const  Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 8),
-            child:  CustomListviewItem(),
-          );
-          }),
-    );
-  }
-}
-
-
-
