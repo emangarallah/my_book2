@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48,
+      height: 45,
       child: TextButton(onPressed: (){},
           style: TextButton.styleFrom(
             backgroundColor: backgroundColor,
@@ -23,9 +23,10 @@ class CustomButton extends StatelessWidget {
 
             ),
           ),
-          child: Text(text,
-            style: Styles.textStyle18.copyWith(color: textColor,fontSize: fontSize,
-                fontWeight: FontWeight.w900),)),
+          child:  Text(text,
+              style: Styles.textStyle18.copyWith(color: textColor,fontSize: fontSize,
+                  fontWeight: FontWeight.w900),),
+          )
     );
   }
 }
