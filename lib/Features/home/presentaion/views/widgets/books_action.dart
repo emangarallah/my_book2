@@ -30,6 +30,6 @@ class BooksAction extends StatelessWidget {
 
         ],
       ),
-    );;
+    );
   }
 }
