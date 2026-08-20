@@ -1,10 +1,11 @@
 import 'package:book/Features/Splash/presentation/views/splash_view.dart';
-import 'package:book/Features/search/search_view.dart';
+
 
 import 'package:go_router/go_router.dart';
 
 import '../../Features/home/presentation/views/book_detailes_view.dart';
 import '../../Features/home/presentation/views/home_view.dart';
+import '../../Features/search/presentation/views/search_view.dart';
 
 abstract class AppRouter {
   static const kHomeView = '/homeview';
