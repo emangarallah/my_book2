@@ -7,44 +7,61 @@ abstract class Failure {
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(super.errMessage);
+  const ServerFailure(super.errMessage);
 
-  factory ServerFailure.fromDioError(DioError dioError) {
-    switch (dioError.type) {
-      case DioErrorType.connectTimeout:
-        return ServerFailure('Connection timeout with ApiServer');
+  factory ServerFailure.fromDioException(DioException dioException) {
+    switch (dioException.type) {
+      case DioExceptionType.connectionTimeout:
+        return const ServerFailure('Connection timeout with ApiServer');
 
-      case DioErrorType.sendTimeout:
-        return ServerFailure('Send timeout with ApiServer');
+      case DioExceptionType.sendTimeout:
+        return const ServerFailure('Send timeout with ApiServer');
 
-      case DioErrorType.receiveTimeout:
-        return ServerFailure('Receive timeout with ApiServer');
+      case DioExceptionType.receiveTimeout:
+        return const ServerFailure('Receive timeout with ApiServer');
 
-      case DioErrorType.response:
+      case DioExceptionType.badCertificate:
+        return const ServerFailure('Bad SSL certificate');
+
+      case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
-            dioError.response!.statusCode, dioError.response!.data);
-      case DioErrorType.cancel:
-        return ServerFailure('Request to ApiServer was canceld');
+          dioException.response?.statusCode,
+          dioException.response?.data,
+        );
 
-      case DioErrorType.other:
-        if (dioError.message.contains('SocketException')) {
-          return ServerFailure('No Internet Connection');
+      case DioExceptionType.cancel:
+        return const ServerFailure('Request to ApiServer was canceled');
+
+      case DioExceptionType.connectionError:
+        return const ServerFailure('No Internet Connection');
+
+      case DioExceptionType.transformTimeout:
+        return const ServerFailure('Data transformation process timed out');
+
+      case DioExceptionType.unknown:
+        if (dioException.message?.contains('SocketException') ?? false) {
+          return const ServerFailure('No Internet Connection');
         }
-        return ServerFailure('Unexpected Error, Please try again!');
-      default:
-        return ServerFailure('Opps There was an Error, Please try again');
+        return const ServerFailure('Unexpected Error, Please try again!');
     }
   }
 
   factory ServerFailure.fromResponse(int? statusCode, dynamic response) {
+    if (statusCode == null) {
+      return const ServerFailure('Received invalid status code');
+    }
+
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ServerFailure(response['error']['message']);
+      if (response is Map<String, dynamic> && response['error'] != null) {
+        return ServerFailure(response['error']['message'] ?? 'Authentication or request error');
+      }
+      return const ServerFailure('Invalid request or unauthorized access');
     } else if (statusCode == 404) {
-      return ServerFailure('Your request not found, Please try later!');
+      return const ServerFailure('Your request was not found, Please try later!');
     } else if (statusCode == 500) {
-      return ServerFailure('Internal Server error, Please try later');
+      return const ServerFailure('Internal Server error, Please try later');
     } else {
-      return ServerFailure('Opps There was an Error, Please try again');
+      return const ServerFailure('Oops, there was an error. Please try again');
     }
   }
 }
